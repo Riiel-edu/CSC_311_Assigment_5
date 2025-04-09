@@ -4,6 +4,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Scanner;
@@ -20,9 +22,39 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 640, 480);
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("primary.fxml"));
+
+        AnchorPane root = new AnchorPane();
+        root.getChildren().add(fxmlLoader.load());
+
+        scene = new Scene(root, 675, 400);
         stage.setScene(scene);
+        splashSetup(root, stage);
         stage.show();
+    }
+
+    static void splashSetup(AnchorPane root, Stage stage) {
+        Button login = new Button();
+        login.setLayoutX(250); login.setLayoutY(350); login.maxWidth(200); login.maxHeight(50);
+        login.setText("LOGIN");
+        root.getChildren().add(login);
+        login.setOnAction(e -> {
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("secondary.fxml"));
+            try {
+                Stage loginStage = new Stage();
+                AnchorPane landingRoot = new AnchorPane();
+                landingRoot.getChildren().add(fxmlLoader.load());
+
+                Scene scene = new Scene(landingRoot, 675, 400);
+                loginStage.setScene(scene);
+                loginStage.setResizable(true);
+
+                stage.close();
+                loginStage.show();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
     }
 
     static void setRoot(String fxml) throws IOException {
@@ -55,7 +87,7 @@ public class App extends Application {
 
             switch (input) {
                 case 'g':
-                     launch(args); //GUI
+                     launch(); //GUI
                     break;
 
                 case 'c':
@@ -73,7 +105,7 @@ public class App extends Application {
                     System.out.print("Enter Phone: ");
                     String phone = scan.next();
                     System.out.print("Enter Address: ");
-                    String address = scan.next();
+                    String address = scan.nextLine();
                     System.out.print("Enter Password: ");
                     String password = scan.next();
                     cdbop.insertUser(name, email, phone, address, password); //Your insertUser method
