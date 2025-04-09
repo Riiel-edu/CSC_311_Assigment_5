@@ -16,8 +16,8 @@ import java.sql.Statement;
  * @author MoaathAlrajab
  */
 public class ConnDbOps {
-    final String MYSQL_SERVER_URL = "jdbc:mysql://localhost/";
-    final String DB_URL = "csc311riven50.mysql.database.azure.com/";
+    final String MYSQL_SERVER_URL = "jdbc:mysql://csc311riven50.mysql.database.azure.com:3306/";
+    final String DB_URL = "DBname";
     final String USERNAME = "csc311riven";
     final String PASSWORD = "FARM123$";
 
