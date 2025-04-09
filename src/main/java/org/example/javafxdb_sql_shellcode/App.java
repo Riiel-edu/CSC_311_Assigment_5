@@ -9,7 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Scanner;
-import javafx.scene.paint.Color;
+
 import org.example.javafxdb_sql_shellcode.db.ConnDbOps;
 
 /**
@@ -22,7 +22,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("primary.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("splash-view.fxml"));
 
         AnchorPane root = new AnchorPane();
         root.getChildren().add(fxmlLoader.load());
@@ -35,11 +35,59 @@ public class App extends Application {
 
     static void splashSetup(AnchorPane root, Stage stage) {
         Button login = new Button();
+        login.setLayoutX(240); login.setLayoutY(320); login.prefWidth(200); login.prefHeight(50);
+        login.setText("LOGIN");
+        root.getChildren().add(login);
+        login.setOnAction(e -> {
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("login-view.fxml"));
+            try {
+                Stage loginStage = new Stage();
+                AnchorPane loginRoot = new AnchorPane();
+                loginRoot.getChildren().add(fxmlLoader.load());
+
+                Scene scene = new Scene(loginRoot, 675, 400);
+                loginStage.setScene(scene);
+                loginStage.setResizable(true);
+                //loginSetup(loginRoot, loginStage);
+
+                stage.close();
+                loginStage.show();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+    }
+
+    static void loginSetup(AnchorPane root, Stage stage) {
+
+        Button login = new Button();
         login.setLayoutX(250); login.setLayoutY(350); login.maxWidth(200); login.maxHeight(50);
         login.setText("LOGIN");
         root.getChildren().add(login);
         login.setOnAction(e -> {
-            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("secondary.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("register-view.fxml"));
+            try {
+                Stage loginStage = new Stage();
+                AnchorPane landingRoot = new AnchorPane();
+                landingRoot.getChildren().add(fxmlLoader.load());
+
+                Scene scene = new Scene(landingRoot, 675, 400);
+                loginStage.setScene(scene);
+                loginStage.setResizable(true);
+
+                stage.close();
+                loginStage.show();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
+        Button register = new Button();
+        register.setLayoutX(250); register.setLayoutY(350); register.maxWidth(200); register.maxHeight(50);
+        register.setText("LOGIN");
+        root.getChildren().add(register);
+        register.setOnAction(e -> {
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("register-view.fxml"));
             try {
                 Stage loginStage = new Stage();
                 AnchorPane landingRoot = new AnchorPane();
